@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Question Generator</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Test Question Generator</h1>
+        <form action="/generate/" method="post">
+            <textarea name="text" placeholder="Enter text for question generation..." required>{{ text if text else '' }}</textarea>
+            <button type="submit">Generate Questions</button>
+        </form>
+
+        {% if questions %}
+        <h2>Generated Questions:</h2>
+        <ul>
+            {% for question in questions %}
+                <li>{{ question }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+    </div>
+</body>
+</html>
