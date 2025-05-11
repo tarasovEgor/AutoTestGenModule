@@ -1,53 +1,108 @@
+/* Ensure consistent box model */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+/* Base and font styling */
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Inter', sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #f4f4f4;
+    background-color: #f7f9fc;
+    color: #333;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding-top: 60px;
+    min-height: 100vh;
+    max-width: 100vw;
+    overflow-x: hidden;
 }
 
+/* Central content container */
 .container {
-    width: 60%;
-    margin: 50px auto;
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: #ffffff;
+    padding: 40px 30px;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    box-sizing: border-box;
 }
 
+/* Title */
 h1 {
-    font-size: 24px;
+    font-size: 28px;
     text-align: center;
+    margin-bottom: 30px;
+    color: #2c3e50;
 }
 
+/* Form layout */
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* Textarea with consistent width */
 textarea {
     width: 100%;
-    height: 150px;
-    padding: 10px;
+    height: 160px;
+    padding: 15px;
     font-size: 16px;
-    margin-bottom: 20px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    resize: vertical;
+    transition: border-color 0.3s ease;
 }
 
+textarea:focus {
+    border-color: #007BFF;
+    outline: none;
+}
+
+/* Blue submit button */
 button {
-    width: 100%;
-    padding: 10px;
-    background-color: #4CAF50;
+    align-self: center;
+    padding: 12px 24px;
+    background-color: #007BFF;
     color: white;
     border: none;
-    border-radius: 5px;
+    border-radius: 8px;
     cursor: pointer;
-    font-size: 18px;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
 }
 
 button:hover {
-    background-color: #45a049;
+    background-color: #0056b3;
 }
 
-ul {
-    padding-left: 20px;
-    line-height: 1.6;
+/* Section for generated questions */
+h2 {
+    font-size: 22px;
+    margin-top: 40px;
+    margin-bottom: 20px;
+    color: #2c3e50;
+    text-align: center;
 }
-li {
-    margin-bottom: 10px;
+
+.question-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.question-card {
+    background-color: #ecf0f1;
+    padding: 15px 20px;
+    border-radius: 8px;
+    font-size: 16px;
+    line-height: 1.5;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
 }
