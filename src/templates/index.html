@@ -1,28 +1,86 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Question Generator</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <title>Генерация вопросов</title>
     <link rel="stylesheet" href="/static/style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
 </head>
 <body>
     <div class="container">
-        <h1>Test Question Generator</h1>
-        <form action="/generate/" method="post">
-            <textarea name="text" placeholder="Enter text for question generation..." required>{{ text if text else '' }}</textarea>
-            <button type="submit">Generate Questions</button>
+        <h1>Генератор вопросов</h1>
+
+        <form action="/generate/" method="POST" onsubmit="document.getElementById('loading').style.display='block'">
+            <textarea name="input_text" placeholder="Введите текст на английском для генерации вопросов...">{{ input_text or '' }}</textarea>
+            
+            <div class="button-container">
+                <button type="submit">Сгенерировать вопросы</button>
+                <button type="button" id="clearBtn" onclick="clearText()">Очистить текст</button>
+            </div>
         </form>
 
+        <div id="loading" style="display:none; text-align:center; margin-top: 10px;">⏳ Генерация...</div>
+
         {% if questions %}
-        <h2>Generated Questions</h2>
-        <div class="question-list">
-            {% for question in questions %}
-                <div class="question-card">{{ question }}</div>
-            {% endfor %}
-        </div>
+            <h2 id="questionsTitle">Сгенерированные вопросы</h2>
+            <div class="question-list">
+                {% for question in questions %}
+                    <div class="question-card">
+                        <span>{{ question }}</span>
+                        <button class="copy-btn" onclick="copyToClipboard(this)">
+                            <i class="fas fa-copy"></i>
+                        </button>
+                    </div>
+                {% endfor %}
+            </div>
         {% endif %}
     </div>
+
+    <script>
+        // Function to copy text to clipboard
+        function copyToClipboard(button) {
+            const text = button.previousElementSibling.textContent;
+            navigator.clipboard.writeText(text).then(() => {
+                button.innerHTML = '<i class="fas fa-check" style="color: green;"></i>';
+                setTimeout(() => {
+                    button.innerHTML = '<i class="fas fa-copy"></i>';
+                }, 1000);
+            });
+        }
+
+        // Function to clear input text, generated questions, and the title
+        function clearText() {
+            document.querySelector('textarea').value = '';
+
+            const questionList = document.querySelector('.question-list');
+            questionList.innerHTML = '';
+
+            const questionsTitle = document.getElementById('questionsTitle');
+            questionsTitle.style.display = 'none';
+
+            const clearBtn = document.getElementById('clearBtn');
+            clearBtn.style.display = 'none';
+
+            document.getElementById('loading').style.display = 'none';
+        }
+
+        // Function to display the "Clear Text" button when questions are generated
+        function showClearButton() {
+            const clearBtn = document.getElementById('clearBtn');
+            clearBtn.style.display = 'inline-block';
+
+            const questionsTitle = document.getElementById('questionsTitle');
+            questionsTitle.style.display = 'block';
+        }
+
+        window.onload = () => {
+            const clearBtn = document.getElementById('clearBtn');
+            clearBtn.style.display = 'none';
+
+            if (document.querySelector('.question-list')) {
+                showClearButton();
+            }
+        };
+    </script>
 </body>
 </html>
