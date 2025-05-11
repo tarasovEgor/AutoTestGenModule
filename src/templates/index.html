@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Question Generator</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
@@ -15,12 +16,12 @@
         </form>
 
         {% if questions %}
-        <h2>Generated Questions:</h2>
-        <ul>
+        <h2>Generated Questions</h2>
+        <div class="question-list">
             {% for question in questions %}
-                <li>{{ question }}</li>
+                <div class="question-card">{{ question }}</div>
             {% endfor %}
-        </ul>
+        </div>
         {% endif %}
     </div>
 </body>
