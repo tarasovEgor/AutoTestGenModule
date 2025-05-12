@@ -13,6 +13,15 @@ data_collator = DataCollatorWithPadding(tokenizer=tokenizer)
 
 
 def preprocess_function(examples):
+    """
+    Tokenize input text (context) and target text (question) for training.
+
+    Args:
+        examples (dict): A dictionary with 'context' and 'question' fields from the dataset.
+
+    Returns:
+        dict: Tokenized inputs including input IDs, attention masks, and labels.
+    """
     inputs = tokenizer(
         examples['context'], 
         padding="max_length", 
@@ -74,6 +83,15 @@ tokenizer.save_pretrained(model_dir)
 
 
 def generate_question(context):
+    """
+    Generate a question based on the given context using a pre-trained model.
+
+    Args:
+        context (str): The input text or passage from which to generate a question.
+
+    Returns:
+        str: A generated question based on the input context.
+    """
     input_ids = tokenizer.encode(context, return_tensors="pt", max_length=512, truncation=True).to("cpu")
     model_cpu = model.to("cpu")
     output = model_cpu.generate(input_ids, max_length=128, num_beams=5, early_stopping=True)
